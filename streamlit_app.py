@@ -74,8 +74,9 @@ st.write(
     "This is a conversation starter, not a label. More than one area may apply."
 )
 
-area = st.radio(
-    "Possible development area",
+
+areas = st.multiselect(
+    "Possible development areas — select all that seem relevant",
     [
         "Identity and direction",
         "Confidence and navigating challenges",
@@ -83,8 +84,13 @@ area = st.radio(
         "Transitions and independence",
         "I'm not sure yet",
     ],
-    index=None,
+    help=(
+        "More than one area can be relevant. "
+        "Explore these together with the young person rather than "
+        "treating them as fixed categories."
+    ),
 )
+
 
 help_needed = st.multiselect(
     "What kind of help might the young person want?",
@@ -164,8 +170,8 @@ if st.button("Create conversation summary", type="primary"):
             "The priority is to follow appropriate safeguarding or urgent-support "
             "procedures. Do not use curriculum signposting to replace that response."
         )
-    elif not area:
-        st.error("Choose a possible area to explore, or select 'I'm not sure yet'.")
+   elif not areas:
+    st.error("Choose one or more possible areas to explore.")
     else:
         st.success("Conversation summary created")
 
@@ -173,7 +179,8 @@ if st.button("Create conversation summary", type="primary"):
         st.write(young_person_words)
 
         st.markdown("### Area to explore")
-        st.write(area)
+        for selected_area in areas:
+    st.markdown(f"- {selected_area}")
 
         st.markdown("### Possible areas of support")
         if help_needed:
