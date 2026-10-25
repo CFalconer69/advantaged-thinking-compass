@@ -21,17 +21,9 @@ st.info(
     "It does not score, diagnose or categorise young people."
 )
 
-# Resource directory.
-# Curriculum links are provisional and must be checked against
-# the original session instructions before being relied upon.
-
 resources = {
     "Identity and direction": {
-        "signposts": [
-            "Strengths",
-            "What's Good?",
-            "Direction",
-        ],
+        "signposts": ["Strengths", "What's Good?", "Direction"],
         "tools": [
             "Advantage Map",
             "Direction Compass — Week 13",
@@ -39,15 +31,12 @@ resources = {
         ],
         "sessions": (
             "Potential links: Weeks 1, 6 and 11–13. "
-            "Check the original session purposes before selecting."
+            "Check original session purposes before selecting."
         ),
     },
     "Confidence and navigating challenges": {
         "signposts": [
-            "Confidence",
-            "Feeling Stuck",
-            "Pause and Reset",
-            "Keep Going",
+            "Confidence", "Feeling Stuck", "Pause and Reset", "Keep Going"
         ],
         "tools": [
             "When You Forget — Week 17",
@@ -56,14 +45,12 @@ resources = {
         ],
         "sessions": (
             "Potential links: Weeks 17, 20, 24–25, 46 or 51, "
-            "depending on the situation. Verify the original content."
+            "depending on the situation. Verify original content."
         ),
     },
     "Voice, influence, relationships and belonging": {
         "signposts": [
-            "Using My Voice",
-            "Staying Involved",
-            "Who's In Your Corner?",
+            "Using My Voice", "Staying Involved", "Who's In Your Corner?"
         ],
         "tools": [
             "Voice Ladder",
@@ -79,9 +66,7 @@ resources = {
     },
     "Transitions and practical independence": {
         "signposts": [
-            "Direction",
-            "Who's In Your Corner?",
-            "Keep Going",
+            "Direction", "Who's In Your Corner?", "Keep Going"
         ],
         "tools": [
             "Mapping Sustainable Networks — Week 41",
@@ -90,8 +75,8 @@ resources = {
             "Independent Return Path — Week 51",
         ],
         "sessions": (
-            "Potential links: Weeks 40–43 and 46–52, "
-            "depending on the goal. Verify the original session content."
+            "Potential links: Weeks 40–43 and 46–52, depending on the goal. "
+            "Verify the original session content."
         ),
     },
 }
@@ -109,27 +94,10 @@ st.caption(
     "identifiable personal information."
 )
 
-
-    if not goal.strip():
-        st.warning(
-            "Start with what the young person wants to explore. "
-            "A broad hope or uncertainty is enough."
-        )
-
-    elif not areas and not help_types:
-        st.warning(
-            "Select at least one development area or type of help "
-            "to find relevant resources."
-        )
-
-    else:
-
-
-st.header("3. Which areas might be relevant?")
+st.header("2. Which areas might be relevant?")
 
 st.caption(
-    "Select as many as seem useful. These areas overlap and are not "
-    "stages or labels."
+    "Select as many as seem useful. These areas overlap and are not stages."
 )
 
 areas = st.multiselect(
@@ -137,7 +105,7 @@ areas = st.multiselect(
     list(resources.keys()),
 )
 
-st.header("4. What kind of help might be useful?")
+st.header("3. What kind of help might be useful?")
 
 help_types = st.multiselect(
     "Select any that apply",
@@ -154,22 +122,11 @@ help_types = st.multiselect(
     ],
 )
 
-st.divider()
-
 if st.button("Find relevant resources", type="primary"):
-    if urgent is None:
-        st.warning("Please complete the urgent-needs check first.")
-
-    elif urgent != "No immediate concern identified":
+    if not goal.strip():
         st.warning(
-            "Address the urgent concern or seek appropriate advice first. "
-            "You can return to resource signposting when appropriate."
-        )
-
-    elif not goal.strip():
-        st.warning(
-            "Start with the young person's priority, in their own words "
-            "where possible. A broad aspiration or uncertainty is enough."
+            "Start with what the young person wants to explore. "
+            "A broad hope or uncertainty is enough."
         )
 
     elif not areas and not help_types:
@@ -180,7 +137,6 @@ if st.button("Find relevant resources", type="primary"):
 
     else:
         st.header("Your resource guide")
-
         st.markdown("**Starting point**")
         st.write(goal)
 
@@ -204,7 +160,6 @@ if st.button("Find relevant resources", type="primary"):
 
         if help_types:
             st.subheader("What kind of response might help?")
-
             for help_type in help_types:
                 st.markdown(f"- {help_type}")
 
@@ -224,25 +179,23 @@ if st.button("Find relevant resources", type="primary"):
 
         st.divider()
         st.markdown("### Choosing what to use")
-
         st.write(
-            "Use these results as options to explore together, not as "
-            "instructions or a prescribed pathway. Choose the resource "
-            "that best fits the young person's wishes and circumstances. "
-            "It is fine to choose none of them or to start somewhere else."
+            "Explore these options together. Choose a resource that fits "
+            "the young person's wishes and circumstances, or start somewhere "
+            "else if none of these feels right."
         )
 
         st.caption(
-            "Curriculum connections are provisional navigation suggestions, "
-            "not verified recommendations. Check each original session's "
+            "Curriculum connections are provisional suggestions, not "
+            "verified recommendations. Check each original session's "
             "purpose and instructions before use."
         )
 
 st.divider()
-
 st.caption(
     "Prototype only. Entries are not saved to a database. "
-    "This tool does not replace professional judgement, safeguarding "
-    "procedures or access to practical support."
+    "This tool does not replace professional judgement or existing "
+    "safeguarding and support procedures."
 )
+
 
