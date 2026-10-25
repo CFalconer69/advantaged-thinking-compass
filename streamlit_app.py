@@ -160,6 +160,7 @@ review = st.text_input(
     placeholder="For example, at the next meeting",
 )
 
+
 if st.button("Create conversation summary", type="primary"):
     if urgent_need is None:
         st.error("Please complete the immediate-needs check first.")
@@ -170,17 +171,18 @@ if st.button("Create conversation summary", type="primary"):
             "The priority is to follow appropriate safeguarding or urgent-support "
             "procedures. Do not use curriculum signposting to replace that response."
         )
-   elif not areas:
-    st.error("Choose one or more possible areas to explore.")
+    elif not areas:
+        st.error("Choose one or more possible areas to explore.")
     else:
         st.success("Conversation summary created")
 
         st.markdown("### Starting point")
         st.write(young_person_words)
 
-        st.markdown("### Area to explore")
+        st.markdown("### Area(s) to explore")
         for selected_area in areas:
-    st.markdown(f"- {selected_area}")
+            st.markdown(f"- {selected_area}")
+
 
         st.markdown("### Possible areas of support")
         if help_needed:
