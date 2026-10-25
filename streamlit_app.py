@@ -109,24 +109,21 @@ st.caption(
     "identifiable personal information."
 )
 
-st.header("2. Is anything urgent?")
 
-urgent = st.radio(
-    "Does an immediate safety concern or urgent practical need require attention?",
-    [
-        "No immediate concern identified",
-        "Yes — urgent support may be needed",
-        "I'm not sure",
-    ],
-    index=None,
-)
+    if not goal.strip():
+        st.warning(
+            "Start with what the young person wants to explore. "
+            "A broad hope or uncertainty is enough."
+        )
 
-if urgent in ["Yes — urgent support may be needed", "I'm not sure"]:
-    st.warning(
-        "Prioritise appropriate safeguarding, specialist or practical support. "
-        "Follow your organisation's procedures. Do not delay necessary help "
-        "to complete this tool."
-    )
+    elif not areas and not help_types:
+        st.warning(
+            "Select at least one development area or type of help "
+            "to find relevant resources."
+        )
+
+    else:
+
 
 st.header("3. Which areas might be relevant?")
 
