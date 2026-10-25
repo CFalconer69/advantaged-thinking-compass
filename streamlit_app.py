@@ -1,9 +1,3 @@
-import streamlit as st
-
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
 
 import streamlit as st
 
@@ -14,201 +8,244 @@ st.set_page_config(
 )
 
 st.title("🧭 The Development Compass")
-st.subheader("An Advantaged Thinking practitioner tool")
+st.caption("An Advantaged Thinking resource finder for practitioners")
 
 st.write(
-    "Start with the young person's own words. "
-    "Explore what matters to them, consider what support might help, "
-    "and agree a next step together."
+    "Start with what matters to the young person. Explore one or more "
+    "areas together, then find relevant resources, tools and possible "
+    "curriculum activities."
 )
 
 st.info(
-    "This is an early prototype. It supports conversation and practitioner "
-    "judgement; it is not a diagnostic or scoring tool."
+    "The Compass is a flexible signposting tool, not an assessment. "
+    "It does not score, diagnose or categorise young people."
 )
 
-st.divider()
+# Resource directory.
+# Curriculum links are provisional and must be checked against
+# the original session instructions before being relied upon.
 
-st.header("1. Start with the young person's words")
+resources = {
+    "Identity and direction": {
+        "signposts": [
+            "Strengths",
+            "What's Good?",
+            "Direction",
+        ],
+        "tools": [
+            "Advantage Map",
+            "Direction Compass — Week 13",
+            "10% Move",
+        ],
+        "sessions": (
+            "Potential links: Weeks 1, 6 and 11–13. "
+            "Check the original session purposes before selecting."
+        ),
+    },
+    "Confidence and navigating challenges": {
+        "signposts": [
+            "Confidence",
+            "Feeling Stuck",
+            "Pause and Reset",
+            "Keep Going",
+        ],
+        "tools": [
+            "When You Forget — Week 17",
+            "Pause and Reset",
+            "10% Move",
+        ],
+        "sessions": (
+            "Potential links: Weeks 17, 20, 24–25, 46 or 51, "
+            "depending on the situation. Verify the original content."
+        ),
+    },
+    "Voice, influence, relationships and belonging": {
+        "signposts": [
+            "Using My Voice",
+            "Staying Involved",
+            "Who's In Your Corner?",
+        ],
+        "tools": [
+            "Voice Ladder",
+            "Peer Mediation Platform",
+            "Communal Space Accord",
+            "Mapping Social Capital",
+        ],
+        "sessions": (
+            "Potential links: Weeks 27–30 and 35–38. "
+            "Check the session purpose and whether organisational "
+            "change is also needed."
+        ),
+    },
+    "Transitions and practical independence": {
+        "signposts": [
+            "Direction",
+            "Who's In Your Corner?",
+            "Keep Going",
+        ],
+        "tools": [
+            "Mapping Sustainable Networks — Week 41",
+            "Autonomy Budget Matrix — Week 43",
+            "Emergency Reset Routine — Week 46",
+            "Independent Return Path — Week 51",
+        ],
+        "sessions": (
+            "Potential links: Weeks 40–43 and 46–52, "
+            "depending on the goal. Verify the original session content."
+        ),
+    },
+}
 
-young_person_words = st.text_area(
-    "What has the young person said they want, hope for, "
-    "are worried about, or would like to change?",
-    placeholder="Use their own words where possible. Avoid names or identifying details.",
-    height=120,
+st.header("1. What matters to the young person?")
+
+goal = st.text_area(
+    "What have they said they want to explore, change, understand or achieve?",
+    placeholder="Use their own words where possible. A broad hope or uncertainty is fine.",
+    height=100,
 )
 
 st.caption(
-    "You can use a fictional example while testing. "
-    "This prototype does not save entries to a database."
+    "Use fictional examples while testing. Avoid entering names or "
+    "identifiable personal information."
 )
 
-st.header("2. Check what needs attention first")
+st.header("2. Is anything urgent?")
 
-urgent_need = st.radio(
-    "Is there an immediate safety concern or urgent practical need "
-    "that must be addressed before curriculum activities?",
+urgent = st.radio(
+    "Does an immediate safety concern or urgent practical need require attention?",
     [
         "No immediate concern identified",
-        "Yes — urgent support or safeguarding action may be needed",
-        "Not sure — I need to explore this further",
+        "Yes — urgent support may be needed",
+        "I'm not sure",
     ],
     index=None,
 )
 
-if urgent_need in [
-    "Yes — urgent support or safeguarding action may be needed",
-    "Not sure — I need to explore this further",
-]:
+if urgent in ["Yes — urgent support may be needed", "I'm not sure"]:
     st.warning(
-        "Pause curriculum signposting. Follow your organisation's "
-        "safeguarding and urgent-support procedures, consult the appropriate "
-        "colleague, and address immediate practical needs. The Compass "
-        "must never delay necessary support."
+        "Prioritise appropriate safeguarding, specialist or practical support. "
+        "Follow your organisation's procedures. Do not delay necessary help "
+        "to complete this tool."
     )
 
-st.header("3. What would be helpful to explore?")
+st.header("3. Which areas might be relevant?")
 
-st.write(
-    "Choose the area that seems most relevant to the young person now. "
-    "This is a conversation starter, not a label. More than one area may apply."
+st.caption(
+    "Select as many as seem useful. These areas overlap and are not "
+    "stages or labels."
 )
-
 
 areas = st.multiselect(
-    "Possible development areas — select all that seem relevant",
+    "Areas to explore",
+    list(resources.keys()),
+)
+
+st.header("4. What kind of help might be useful?")
+
+help_types = st.multiselect(
+    "Select any that apply",
     [
-        "Identity and direction",
-        "Confidence and navigating challenges",
-        "Voice, influence and belonging",
-        "Transitions and independence",
-        "I'm not sure yet",
-    ],
-    help=(
-        "More than one area can be relevant. "
-        "Explore these together with the young person rather than "
-        "treating them as fixed categories."
-    ),
-)
-
-
-help_needed = st.multiselect(
-    "What kind of help might the young person want?",
-    [
-        "Recognising strengths and interests",
-        "Exploring hopes and possible directions",
-        "Working through a challenge or setback",
-        "Building supportive relationships",
-        "Being heard or influencing a decision",
-        "Finding an opportunity or new experience",
-        "Preparing for a change or transition",
-        "Practical help with an immediate need",
-        "Building trust before setting goals",
-        "Something else",
+        "Understand something or reflect",
+        "Recognise strengths and interests",
+        "Practise a skill or try an activity",
+        "Find a supportive person or relationship",
+        "Access an opportunity",
+        "Have a voice or influence a decision",
+        "Prepare for a transition",
+        "Address a practical barrier",
+        "Build trust before exploring goals",
     ],
 )
 
-st.header("4. Explore together")
+st.divider()
 
-prompts = {
-    "Identity and direction": [
-        "What matters to you, even if you are not sure what comes next?",
-        "When have you felt interested, capable or more like yourself?",
-        "What possibilities would you like to explore without committing to one yet?",
-    ],
-    "Confidence and navigating challenges": [
-        "What has been getting in the way, and what would make things easier?",
-        "What has helped you keep going or recover from a difficult moment before?",
-        "What support would make the next step feel manageable?",
-    ],
-    "Voice, influence and belonging": [
-        "Where would you like your views to be heard?",
-        "Who listens to you, takes you seriously or could help you have influence?",
-        "What would need to change for you to feel more involved or included?",
-    ],
-    "Transitions and independence": [
-        "What change is coming up, and what are you looking forward to or concerned about?",
-        "What would help you feel prepared?",
-        "Who or what will you still be able to rely on when things change?",
-    ],
-    "I'm not sure yet": [
-        "What feels most important to talk about today?",
-        "Would it help to talk, explore possibilities, solve a practical problem or simply take some time?",
-        "What would make this conversation useful for you?",
-    ],
-}
+if st.button("Find relevant resources", type="primary"):
+    if urgent is None:
+        st.warning("Please complete the urgent-needs check first.")
 
-if area:
-    st.markdown("**Possible conversation prompts**")
-    for prompt in prompts[area]:
-        st.markdown(f"- {prompt}")
-
-st.header("5. Agree a next step")
-
-next_step = st.text_area(
-    "What has the young person chosen to explore or do next?",
-    placeholder="Record an agreed action, opportunity, conversation or practical support.",
-)
-
-practitioner_action = st.text_area(
-    "What will the practitioner or organisation do?",
-    placeholder="For example, arrange a conversation, remove a barrier or explore an opportunity.",
-)
-
-review = st.text_input(
-    "When will you review this together?",
-    placeholder="For example, at the next meeting",
-)
-
-
-if st.button("Create conversation summary", type="primary"):
-    if urgent_need is None:
-        st.error("Please complete the immediate-needs check first.")
-    elif not young_person_words.strip():
-        st.error("Start by recording what the young person wants to discuss. A fictional example is fine for testing.")
-    elif urgent_need != "No immediate concern identified":
+    elif urgent != "No immediate concern identified":
         st.warning(
-            "The priority is to follow appropriate safeguarding or urgent-support "
-            "procedures. Do not use curriculum signposting to replace that response."
+            "Address the urgent concern or seek appropriate advice first. "
+            "You can return to resource signposting when appropriate."
         )
-    elif not areas:
-        st.error("Choose one or more possible areas to explore.")
+
+    elif not goal.strip():
+        st.warning(
+            "Start with the young person's priority, in their own words "
+            "where possible. A broad aspiration or uncertainty is enough."
+        )
+
+    elif not areas and not help_types:
+        st.warning(
+            "Select at least one development area or type of help "
+            "to find relevant resources."
+        )
+
     else:
-        st.success("Conversation summary created")
+        st.header("Your resource guide")
 
-        st.markdown("### Starting point")
-        st.write(young_person_words)
+        st.markdown("**Starting point**")
+        st.write(goal)
 
-        st.markdown("### Area(s) to explore")
-        for selected_area in areas:
-            st.markdown(f"- {selected_area}")
+        if areas:
+            st.subheader("Relevant development areas")
 
+            for area in areas:
+                item = resources[area]
 
-        st.markdown("### Possible areas of support")
-        if help_needed:
-            for item in help_needed:
-                st.markdown(f"- {item}")
-        else:
-            st.write("No support type selected yet.")
+                with st.expander(area, expanded=True):
+                    st.markdown("**Built for More signposts to explore**")
+                    for signpost in item["signposts"]:
+                        st.markdown(f"- {signpost}")
 
-        st.markdown("### Agreed next step")
-        st.write(next_step or "Not yet agreed")
+                    st.markdown("**Named tools and resources**")
+                    for tool in item["tools"]:
+                        st.markdown(f"- {tool}")
 
-        st.markdown("### Practitioner or organisational action")
-        st.write(practitioner_action or "Not yet agreed")
+                    st.markdown("**Possible curriculum connections**")
+                    st.write(item["sessions"])
 
-        st.markdown("### Review")
-        st.write(review or "To be agreed")
+        if help_types:
+            st.subheader("What kind of response might help?")
+
+            for help_type in help_types:
+                st.markdown(f"- {help_type}")
+
+            if "Address a practical barrier" in help_types:
+                st.info(
+                    "Consider whether practical assistance or action by "
+                    "the organisation is needed, rather than a curriculum "
+                    "activity alone."
+                )
+
+            if "Have a voice or influence a decision" in help_types:
+                st.info(
+                    "Consider whether the practitioner or organisation "
+                    "needs to change how it listens, shares power or "
+                    "responds to the young person's views."
+                )
+
+        st.divider()
+        st.markdown("### Choosing what to use")
+
+        st.write(
+            "Use these results as options to explore together, not as "
+            "instructions or a prescribed pathway. Choose the resource "
+            "that best fits the young person's wishes and circumstances. "
+            "It is fine to choose none of them or to start somewhere else."
+        )
 
         st.caption(
-            "This summary is displayed for the current session only. "
-            "Copy it to an approved system if needed, following your "
-            "organisation's privacy and information-handling policies."
+            "Curriculum connections are provisional navigation suggestions, "
+            "not verified recommendations. Check each original session's "
+            "purpose and instructions before use."
         )
 
 st.divider()
 
 st.caption(
-    "Development prototype — curriculum session recommendations have not "
-    "yet been linked and verified against the original Built for More materials."
+    "Prototype only. Entries are not saved to a database. "
+    "This tool does not replace professional judgement, safeguarding "
+    "procedures or access to practical support."
 )
+
